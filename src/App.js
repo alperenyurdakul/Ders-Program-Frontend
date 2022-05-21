@@ -5,76 +5,111 @@ import axios from 'axios';
 
 function App() {
   const [gün, setGun] = useState();
-  const [ders, setDers] = useState();
-  const [saat, setSaat] = useState();
+  const [ders, setDers] = useState([]);
+  const [saat, setSaat] = useState([]);
   const [datas, setData] = useState([]);
+  const [datas1, setData1] = useState([]);
+  const [datas2, setData2] = useState([]);
+  const [datas3, setData3] = useState([]);
+  const [datas4, setData4] = useState([]);
+  const [datas5, setData6] = useState([]);
 
 
-  const dersEkle = () => {
-    axios.post('http://localhost:3000/', { gün, ders, saat })
-      .then((res) => {
-        setData(res.data)
-        console.log(res.data);
 
-      })
-  }
 
-  const getAllData = () => {
-    axios.get('http://localhost:3000/getir')
-      .then((res) => {
-        setData(res.data)
-        console.log("data");
-      })
-  }
   const getData = () => {
-    axios.post('http://localhost:3000/getir/gun', { gün })
+    axios.get('http://localhost:3000/kayit/getir', { ders, saat, gün })
       .then((res) => {
-        datas.push(setData(res.data))
-        console.log(res.data);
+        setData(res.data)
 
       })
   }
-  const programEkle = () => {
-    axios.post('http://localhost:3000/program-yap', { gün, ders, saat })
+  const postData = () => {
+    axios.post('http://localhost:3000/kayit', { ders, saat, gün })
       .then((res) => {
-        datas.push(setData(res.data))
-        console.log(res.data);
-
+        getData()
+      })
+  }
+  const removeData = () => {
+    axios.post('http://localhost:3000/kayit/sil', { ders })
+      .then((res) => {
+        getData();
       })
   }
 
+  useEffect(() => {
+    axios.get('http://localhost:3000/kayit/getir', { ders, saat, gün })
+      .then((res) => {
+        setData(res.data)
+
+      })
+  })
 
   return (
     <div className="App">
-      <h2>Ders Programı</h2>
-      <div style={{ display: 'block', height: 'auto' }}>
-        <div style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-          <input type="text" placeholder="ders girin" onChange={e => setDers(e.target.value)} /><br></br>
-          <input type="text" placeholder="saat girin" onChange={e => setSaat(e.target.value)} /><br></br>
-          <input type="text" placeholder="gün girin" onChange={e => setGun(e.target.value)} /><br></br>
+      <h2 style={{ color: 'red' }}>Ders Programı Oluşturma Web</h2>
+      <div style={{ display: 'block', height: 'auto', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ flexDirection: 'row', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <h3>Ders Girin:</h3>
+          <input style={{ width: '15%', height: 40, justifyContent: 'center', alignItems: 'center', margin: 20 }} type="text" placeholder="" onChange={e => { setDers(e.target.value) }} /><br></br>
+          <h3>Saat Girin:</h3>
+          <input style={{ width: '15%', height: 40, justifyContent: 'center', alignItems: 'center', margin: 20 }} type="text" placeholder="" onChange={e => setSaat(e.target.value)} /><br></br>
+          <h3>Gün Girin:</h3>
+          <input style={{ width: '15%', height: 40, justifyContent: 'center', alignItems: 'center', margin: 20 }} type="text" placeholder="" onChange={e => setGun(e.target.value)} /><br></br>
+
         </div>
 
         <div>
+          <button style={{ justifyContent: 'center', alignItems: 'center', width: '15%', height: 40, margin: 20 }} onClick={() => { postData() }}>  Kaydet </button>
+          <button style={{ justifyContent: 'center', alignItems: 'center', margin: 20 }} onClick={() => { removeData() }}>Sil </button>
 
 
-          <button style={{ justifyContent: 'center', alignItems: 'center' }} onClick={() => { getAllData() }}>Get All data</button>
-          <button style={{ justifyContent: 'center', alignItems: 'center' }} onClick={() => { getData() }}>Ekleme</button>
-          <button style={{ justifyContent: 'center', alignItems: 'center' }} onClick={() => { programEkle() }}>Program yenile</button>
-          <button style={{ justifyContent: 'center', alignItems: 'center' }} onClick={() => { dersEkle() }}>Ekle</button>
+
+
         </div>
       </div>
 
+      <div style={{ display: 'flex', alignItems: 'center', padding: 20, justifyContent: 'center', flexDirection: 'row' }}>
+        <table>
+          <thead>
 
-      <table className="table">
-        {datas.map((item) => {
-          return (<tr>
-            <td>{item.gün}</td>
-            <td>{item.saat}</td>
-            <td>{item.ders}</td>
+            <tr style={{ justifyContent: 'center', alignItems: 'center' }}>
+              <th style={{ width: '20%', justifyContent: 'center' }}>Günler-Saat</th>
+              <th style={{ width: '20%', justifyContent: 'center' }}>Pazartesi</th>
+              <th style={{ width: '20%', justifyContent: 'center' }}>Salı</th>
+              <th style={{ width: '20%', justifyContent: 'center' }}>Çarşamba</th>
+              <th style={{ width: '40', justifyContent: 'center' }}>Perşembe</th>
+              <th style={{ width: '11%', justifyContent: 'center' }}>Cuma</th>
+              <th style={{ width: '11%', justifyContent: 'center' }}>Cumartesi</th>
+              <th style={{ width: '11%', justifyContent: 'center' }}>Pazar</th>
 
-          </tr>)
-        })}
-      </table>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+
+            </tr>
+
+            {datas.map((item) => {
+              return (
+                <tr>
+                  <td>{item.saat}</td>
+                  <td>{item.ders}</td>
+                </tr>
+
+              )
+
+            })}
+
+
+
+
+          </tbody>
+        </table>
+      </div>
+
+
     </div>
   )
 
