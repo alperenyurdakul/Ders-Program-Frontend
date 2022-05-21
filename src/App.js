@@ -51,7 +51,7 @@ function App() {
       <div style={{ display: 'block', height: 'auto', justifyContent: 'center', alignItems: 'center' }}>
         <div style={{ flexDirection: 'row', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <h3>Ders Girin:</h3>
-          <input style={{ width: '15%', height: 40, justifyContent: 'center', alignItems: 'center', margin: 20 }} type="text" placeholder="" onChange={e => { setDers(e.target.value) }} /><br></br>
+          <input style={{ width: '16%', height: 40, justifyContent: 'center', alignItems: 'center', margin: 20 }} type="text" placeholder="" onChange={e => { setDers(e.target.value) }} /><br></br>
           <h3>Saat Girin:</h3>
           <input style={{ width: '15%', height: 40, justifyContent: 'center', alignItems: 'center', margin: 20 }} type="text" placeholder="" onChange={e => setSaat(e.target.value)} /><br></br>
           <h3>Gün Girin:</h3>
@@ -101,9 +101,6 @@ function App() {
               )
 
             })}
-
-
-
 
           </tbody>
         </table>
